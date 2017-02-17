@@ -10,7 +10,8 @@ class GatewaysController < ApplicationController
       method: request.method,
       path: request.fullpath,
       remote_addr: request.remote_addr,
-      query_string: request.query_string
+      query_string: request.query_string,
+      url_pattern: get_route_pattern
     }
     # todo: validate, handle post, filter request
     params.permit!
@@ -21,5 +22,11 @@ class GatewaysController < ApplicationController
     api_error(404, 'route not found') if response.empty?
 
     render json: response, status: 200
+  end
+
+  private
+
+  def get_route_pattern
+    Rails.application.routes.router.recognize(request) { |route| return route.path.spec.to_s }
   end
 end
