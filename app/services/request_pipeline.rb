@@ -23,9 +23,10 @@ class RequestPipeline
   def route_map
     verb = params[:method].to_s.downcase
 
-
-    url_pattern = params[:url_pattern].gsub('/api/', '').gsub('(.:format)', '')
-    version = url_pattern.split('/').shift
+    path = params[:url_pattern].gsub('/api/', '').gsub('(.:format)', '')
+    splited_path = path.split('/')
+    version = splited_path.shift
+    url_pattern = splited_path.join('/')
 
     route = Route.where({ verb: verb,
                           version: version,
