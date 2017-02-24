@@ -19,9 +19,7 @@ class GatewaysController < ApplicationController
     filtered_api_params = params.except(*['controller', 'action', 'gateway']).to_h
     response = RequestPipeline.new(request_values, filtered_api_params).execute
 
-    api_error(404, 'route not found') if response.empty?
-
-    render json: response, status: 200
+    render json: response, status: response.status
   end
 
   private
