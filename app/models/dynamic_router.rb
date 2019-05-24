@@ -15,7 +15,7 @@ class DynamicRouter
         when 'put'
           put url_pattern, to: 'gateways#call'
         when  'delete'
-          delet url_pattern, to: 'gateways#call'
+          delete url_pattern, to: 'gateways#call'
         end
       end
     end
